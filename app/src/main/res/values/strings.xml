@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Project Q</string>
+    <string name="txt_product_price">\$%1$d</string>
+</resources>
