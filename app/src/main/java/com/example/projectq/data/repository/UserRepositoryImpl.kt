@@ -19,11 +19,11 @@ class UserRepositoryImpl @Inject constructor(
         return remoteDataSource.getUserDetail(username)
     }
 
-    override suspend fun getUserFollowing(username: String): Resource<List<UserHomeDomainModel>> {
-        return remoteDataSource.getUserFollowing(username)
+    override suspend fun getListUserFollowing(username: String): Resource<List<UserHomeDomainModel>> {
+        return remoteDataSource.getListUserFollowing(username)
     }
 
-    override suspend fun getUserFollowers(username: String): Resource<List<UserHomeDomainModel>> {
-        return remoteDataSource.getUserFollowers(username)
+    override suspend fun getListUserFollowers(username: String): Resource<List<UserHomeDomainModel>> {
+        return remoteDataSource.getListUserFollowers(username)
     }
 }

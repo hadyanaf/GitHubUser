@@ -27,12 +27,12 @@ interface UserApi {
     ): Response<DetailUserResponse>
 
     @GET(GET_LIST_FOLLOWING)
-    suspend fun getUserFollowing(
+    suspend fun getListUserFollowing(
         @Path("username") username: String
     ): Response<List<DetailUserResponse>>
 
     @GET(GET_LIST_FOLLOWERS)
-    suspend fun getUserFollowers(
+    suspend fun getListUserFollowers(
         @Path("username") username: String
     ): Response<List<DetailUserResponse>>
 }

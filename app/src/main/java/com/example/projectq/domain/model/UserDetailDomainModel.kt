@@ -1,9 +1,9 @@
 package com.example.projectq.domain.model
 
 data class UserDetailDomainModel(
-    val avatarUrl: String,
-    val username: String,
-    val fullName: String,
-    val followersCount: Int,
-    val followingCount: Int
+    val avatarUrl: String? = null,
+    val username: String? = null,
+    val fullName: String? = null,
+    val followersCount: Int? = null,
+    val followingCount: Int? = null
 )

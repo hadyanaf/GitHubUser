@@ -10,7 +10,10 @@ import com.example.projectq.data.util.DataStoreManager
 import com.example.projectq.data.util.DispatcherProvider
 import com.example.projectq.domain.repository.PreferencesRepository
 import com.example.projectq.domain.repository.UserRepository
+import com.example.projectq.domain.usecase.GetListUserFollowersUseCase
+import com.example.projectq.domain.usecase.GetListUserFollowingUseCase
 import com.example.projectq.domain.usecase.GetListUserUseCase
+import com.example.projectq.domain.usecase.GetUserDetailUseCase
 import com.example.projectq.domain.usecase.SaveAccessTokenUseCase
 import dagger.Module
 import dagger.Provides
@@ -56,6 +59,33 @@ object AppModule {
         dispatcherProvider: DispatcherProvider
     ): GetListUserUseCase {
         return GetListUserUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserDetailUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): GetUserDetailUseCase {
+        return GetUserDetailUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetListUserFollowingUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): GetListUserFollowingUseCase {
+        return GetListUserFollowingUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetListUserFollowersUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): GetListUserFollowersUseCase {
+        return GetListUserFollowersUseCase(userRepository, dispatcherProvider)
     }
 
     @Provides

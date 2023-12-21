@@ -1,20 +1,20 @@
-package com.example.projectq.ui.main
+package com.example.projectq.ui.detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.projectq.databinding.ItemUserBinding
+import com.example.projectq.databinding.ItemUserFollowBinding
 import com.example.projectq.domain.model.UserHomeDomainModel
 
-class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class DetailFollowAdapter : RecyclerView.Adapter<DetailFollowAdapter.MainViewHolder>() {
 
     private val listUser: MutableList<UserHomeDomainModel> = mutableListOf()
     private var onItemClickCallback: OnItemClickCallback? = null
 
     // ViewHolder class
-    inner class MainViewHolder(private val binding: ItemUserBinding) :
+    inner class MainViewHolder(private val binding: ItemUserFollowBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(user: UserHomeDomainModel) {
             with(binding) {
@@ -33,7 +33,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val binding =
-            ItemUserBinding.inflate(
+            ItemUserFollowBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

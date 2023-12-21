@@ -1,5 +1,6 @@
 package com.example.projectq.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -8,8 +9,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectq.R
+import com.example.projectq.data.util.IntentConstant
 import com.example.projectq.databinding.ActivityMainBinding
 import com.example.projectq.domain.model.UserHomeDomainModel
+import com.example.projectq.ui.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickCallback(object : MainAdapter.OnItemClickCallback {
             override fun onItemClicked(username: String) {
-                Toast.makeText(this@MainActivity, username, Toast.LENGTH_SHORT).show()
+                vm.processEvent(MainViewModel.ViewEvent.OnCardClicked(username))
             }
         })
     }
@@ -71,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                     is MainViewModel.ViewEffect.ShowData -> showData(effect.data)
                     is MainViewModel.ViewEffect.ShowErrorMessage -> showErrorMessage(effect.message)
                     is MainViewModel.ViewEffect.ShowProgressBar -> setProgressViewVisibility(effect.isVisible)
+                    is MainViewModel.ViewEffect.NavigateToDetailPage -> navigateToDetailPage(effect.username)
                 }
             }
         }
@@ -90,5 +94,18 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.progressBar.visibility = View.GONE
         }
+    }
+
+    private fun navigateToDetailPage(username: String) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.apply {
+            putExtra(IntentConstant.EXTRAS_USERNAME, username)
+        }
+
+        startActivity(intent)
+    }
+
+    companion object {
+        const val RV_VIEW_STATE = "rv_view_state"
     }
 }

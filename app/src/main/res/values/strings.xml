@@ -3,5 +3,6 @@
     <string name="txt_search_hint">Search user</string>
     <string name="default_username">hadyan</string>
     <string name="access_token">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</string>
-    <string name="search">Search</string>
+    <string name="tab_following">%1$s Following</string>
+    <string name="tab_followers">%1$s Followers</string>
 </resources>

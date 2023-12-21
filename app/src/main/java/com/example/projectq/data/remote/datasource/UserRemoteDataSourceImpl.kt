@@ -32,8 +32,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         }
     }
 
-    override suspend fun getUserFollowing(username: String): Resource<List<UserHomeDomainModel>> {
-        val response = userApi.getUserFollowing(username)
+    override suspend fun getListUserFollowing(username: String): Resource<List<UserHomeDomainModel>> {
+        val response = userApi.getListUserFollowing(username)
         return if (response.isSuccessful) {
             response.body()?.let { responseBody ->
                 Resource.Success(data = responseBody.map { it.toUserHomeDomainModel() })
@@ -43,8 +43,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
         }
     }
 
-    override suspend fun getUserFollowers(username: String): Resource<List<UserHomeDomainModel>> {
-        val response = userApi.getUserFollowers(username)
+    override suspend fun getListUserFollowers(username: String): Resource<List<UserHomeDomainModel>> {
+        val response = userApi.getListUserFollowers(username)
         return if (response.isSuccessful) {
             response.body()?.let { responseBody ->
                 Resource.Success(data = responseBody.map { it.toUserHomeDomainModel() })

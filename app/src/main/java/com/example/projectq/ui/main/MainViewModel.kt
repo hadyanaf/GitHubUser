@@ -40,7 +40,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun onCardClicked(event: ViewEvent.OnCardClicked) {
-
+        _viewEffect.value =
+            SingleEvent(ViewEffect.NavigateToDetailPage(event.username))
     }
 
     private fun onSearchClicked(event: ViewEvent.OnSearchClicked) {
@@ -74,13 +75,14 @@ class MainViewModel @Inject constructor(
         data class ShowData(val data: List<UserHomeDomainModel>) : ViewEffect
         data class ShowErrorMessage(val message: String) : ViewEffect
         data class ShowProgressBar(val isVisible: Boolean) : ViewEffect
+        data class NavigateToDetailPage(val username: String) : ViewEffect
     }
 
     sealed interface ViewEvent {
         data class OnActivityStarted(val accessToken: String, val defaultUsername: String) :
             ViewEvent
 
-        data class OnCardClicked(val id: Int) : ViewEvent
+        data class OnCardClicked(val username: String) : ViewEvent
         data class OnSearchClicked(val username: String) : ViewEvent
     }
 }
