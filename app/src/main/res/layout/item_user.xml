@@ -7,11 +7,11 @@
     android:layout_marginHorizontal="10dp">
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:elevation="8dp"
-        app:cardBackgroundColor="@color/gray"
         app:cardCornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

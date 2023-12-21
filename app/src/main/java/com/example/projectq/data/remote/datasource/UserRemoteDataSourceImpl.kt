@@ -12,7 +12,6 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userApi: UserApi)
 
     override suspend fun getListUser(username: String): Resource<List<UserHomeDomainModel>> {
         val response = userApi.getListUser(username)
-        Timber.d("Check response: $response")
         return if (response.isSuccessful) {
             response.body()?.let { responseBody ->
                 responseBody.detailUserResponses?.let { Resource.Success(data = it.map { data -> data.toUserHomeDomainModel() }) }

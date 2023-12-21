@@ -1,6 +1,7 @@
 package com.example.projectq.ui.main
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,7 +11,6 @@ import com.example.projectq.R
 import com.example.projectq.databinding.ActivityMainBinding
 import com.example.projectq.domain.model.UserHomeDomainModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                 .setOnEditorActionListener { textView, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         searchView.hide()
-                        Timber.d("Check text: ${textView.text}")
+                        vm.processEvent(MainViewModel.ViewEvent.OnSearchClicked(textView.text.toString()))
                         true
                     } else {
                         false
@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 when (effect) {
                     is MainViewModel.ViewEffect.ShowData -> showData(effect.data)
                     is MainViewModel.ViewEffect.ShowErrorMessage -> showErrorMessage(effect.message)
+                    is MainViewModel.ViewEffect.ShowProgressBar -> setProgressViewVisibility(effect.isVisible)
                 }
             }
         }
@@ -81,5 +82,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun showErrorMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun setProgressViewVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }
