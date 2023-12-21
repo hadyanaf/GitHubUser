@@ -73,6 +73,7 @@ data class DetailUserResponse(
     val url: String? = null
 ) {
     fun toUserHomeDomainModel() = UserHomeDomainModel(
+        id = id ?: 0,
         avatarUrl = avatarUrl.orEmpty(),
         username = login.orEmpty()
     )

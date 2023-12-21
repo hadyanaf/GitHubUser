@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Project Q</string>
-    <string name="txt_product_price">\$%1$d</string>
+    <string name="txt_search_hint">Search user</string>
+    <string name="default_username">hadyan</string>
+    <string name="access_token">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</string>
+    <string name="search">Search</string>
 </resources>

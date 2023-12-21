@@ -1,7 +1,9 @@
 package com.example.projectq.di
 
+import com.example.projectq.BuildConfig
+import com.example.projectq.data.remote.apiservice.UserApi
 import com.example.projectq.data.util.AuthInterceptor
-import com.example.projectq.domain.repository.UserRepository
+import com.example.projectq.domain.repository.PreferencesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,15 +19,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(userRepository: UserRepository): AuthInterceptor {
-        return AuthInterceptor(userRepository)
+    fun provideAuthInterceptor(preferencesRepository: PreferencesRepository): AuthInterceptor {
+        return AuthInterceptor(preferencesRepository)
     }
 
     @Provides
     @Singleton
     fun provideRetrofit(authInterceptor: AuthInterceptor): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://your.api.endpoint/") // Replace with your base URL
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
@@ -33,5 +35,11 @@ object NetworkModule {
                     .build()
             )
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserApiService(retrofit: Retrofit): UserApi {
+        return retrofit.create(UserApi::class.java)
     }
 }

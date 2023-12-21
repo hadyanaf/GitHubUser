@@ -1,10 +1,10 @@
-package com.example.projectq.domain.repository
+package com.example.projectq.data.remote.datasource
 
 import com.example.projectq.data.util.Resource
 import com.example.projectq.domain.model.UserDetailDomainModel
 import com.example.projectq.domain.model.UserHomeDomainModel
 
-interface UserRepository {
+interface UserRemoteDataSource {
     suspend fun getListUser(username: String): Resource<List<UserHomeDomainModel>>
     suspend fun getUserDetail(username: String): Resource<UserDetailDomainModel>
     suspend fun getUserFollowing(username: String): Resource<List<UserHomeDomainModel>>

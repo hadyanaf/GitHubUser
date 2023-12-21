@@ -6,31 +6,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.projectq.R
-import com.example.projectq.data.local.model.ProductDomain
-import com.example.projectq.databinding.ItemProductBinding
+import com.example.projectq.databinding.ItemUserBinding
+import com.example.projectq.domain.model.UserHomeDomainModel
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
-    private val listProduct: MutableList<ProductDomain> = mutableListOf()
+    private val listUser: MutableList<UserHomeDomainModel> = mutableListOf()
     private var onItemClickCallback: OnItemClickCallback? = null
 
     // ViewHolder class
-    inner class MainViewHolder(private val binding: ItemProductBinding) :
+    inner class MainViewHolder(private val binding: ItemUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: ProductDomain) {
+        fun bind(user: UserHomeDomainModel) {
             with(binding) {
                 Glide.with(itemView.context)
-                    .load(product.thumbnail)
+                    .load(user.avatarUrl)
                     .centerCrop()
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(imgProductThumbnail)
+                    .into(imgUser)
 
-                tvTitleProduct.text = product.title
-                tvPrice.text = itemView.context.getString(R.string.txt_product_price, product.price)
+                tvUsername.text = user.username
 
                 itemView.setOnClickListener {
-                    onItemClickCallback?.onItemClicked(product.id)
+                    onItemClickCallback?.onItemClicked(user.username)
                 }
             }
         }
@@ -38,7 +36,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val binding =
-            ItemProductBinding.inflate(
+            ItemUserBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -46,24 +44,24 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
         return MainViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = listProduct.size
+    override fun getItemCount(): Int = listUser.size
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val product = listProduct[position]
+        val product = listUser[position]
         holder.bind(product)
     }
 
-    fun updateList(newList: List<ProductDomain>) {
-        val diffResult = DiffUtil.calculateDiff(UserDiffCallback(listProduct, newList))
-        listProduct.clear()
-        listProduct.addAll(newList)
+    fun updateList(newList: List<UserHomeDomainModel>) {
+        val diffResult = DiffUtil.calculateDiff(UserDiffCallback(listUser, newList))
+        listUser.clear()
+        listUser.addAll(newList)
         diffResult.dispatchUpdatesTo(this)
     }
 
     // DiffUtil callback class
     private class UserDiffCallback(
-        private val oldList: List<ProductDomain>,
-        private val newList: List<ProductDomain>
+        private val oldList: List<UserHomeDomainModel>,
+        private val newList: List<UserHomeDomainModel>
     ) :
         DiffUtil.Callback() {
 
@@ -87,7 +85,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(id: Int)
+        fun onItemClicked(username: String)
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

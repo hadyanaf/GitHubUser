@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="avatar_size">60dp</dimen>
+    <dimen name="avatar_margin">10dp</dimen>
+    <dimen name="txt_name_card">16sp</dimen>
+    <dimen name="margin_start_card">10dp</dimen>
+</resources>
