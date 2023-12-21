@@ -14,14 +14,4 @@
     <color name="colorSecondary">#7986CB</color> <!-- Light Blue 300 -->
     <color name="colorSecondaryVariant">#5C6BC0</color> <!-- Light Blue 400 -->
     <color name="colorOnSecondary">#000000</color> <!-- Black for text/icons on Secondary color -->
-
-    <!-- Background and Surface colors -->
-    <!-- Very dark (almost black) -->
-    <!-- White for text/icons on background -->
-    <!-- Dark grey for surfaces -->
-    <!-- White for text/icons on surface -->
-
-    <!-- Error colors -->
-    <!-- Red (Material Design Error) -->
-    <!-- Black for text/icons on Error color -->
 </resources>
