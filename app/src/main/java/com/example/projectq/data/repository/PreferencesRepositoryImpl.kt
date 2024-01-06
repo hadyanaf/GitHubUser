@@ -13,6 +13,12 @@ class PreferencesRepositoryImpl @Inject constructor(
         dataStoreManager.saveAccessToken(token)
     }
 
+    override suspend fun setThemePreference(themeMode: Int) {
+        dataStoreManager.setThemePreference(themeMode)
+    }
+
     override val accessToken: Flow<String?>
         get() = dataStoreManager.accessToken
+    override val themePreference: Flow<Int>
+        get() = dataStoreManager.themePreference
 }

@@ -68,13 +68,11 @@ dependencies {
     kaptTest 'com.google.dagger:hilt-compiler:2.46.1'
 
     // Room
-    def room_version = "2.6.1"
+    implementation "androidx.room:room-runtime:2.6.1"
+    kapt "androidx.room:room-compiler:2.6.1"
 
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-
-    // To use Kotlin annotation processing tool (kapt)
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:2.6.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -90,7 +88,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
 
     // Live Data
     def lifecycle_version = "2.6.2"
@@ -115,6 +113,10 @@ dependencies {
 
     // HttpLoggingInterceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
+    // Mockito
+    testImplementation("org.mockito:mockito-core:4.4.0")
+    testImplementation("org.mockito:mockito-inline:4.4.0")
 }
 
 kapt {

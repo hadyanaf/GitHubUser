@@ -5,4 +5,8 @@
     <string name="access_token">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</string>
     <string name="tab_following">%1$s Following</string>
     <string name="tab_followers">%1$s Followers</string>
+    <string name="favorite_user">Favorite User</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="settings">Settings</string>
+    <string name="enable_dark_mode">Enable dark mode</string>
 </resources>

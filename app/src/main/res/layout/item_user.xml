@@ -38,7 +38,6 @@
                 android:layout_marginHorizontal="@dimen/margin_start_card"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/black"
                 android:textSize="@dimen/txt_name_card"
                 app:layout_constraintBottom_toBottomOf="@id/img_user"
                 app:layout_constraintEnd_toEndOf="parent"

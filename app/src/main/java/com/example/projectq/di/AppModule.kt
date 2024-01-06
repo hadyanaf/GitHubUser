@@ -1,6 +1,9 @@
 package com.example.projectq.di
 
 import android.content.Context
+import com.example.projectq.data.local.datasource.UserLocalDataSource
+import com.example.projectq.data.local.datasource.UserLocalDataSourceImpl
+import com.example.projectq.data.local.room.UserDao
 import com.example.projectq.data.remote.apiservice.UserApi
 import com.example.projectq.data.remote.datasource.UserRemoteDataSource
 import com.example.projectq.data.remote.datasource.UserRemoteDataSourceImpl
@@ -10,11 +13,17 @@ import com.example.projectq.data.util.DataStoreManager
 import com.example.projectq.data.util.DispatcherProvider
 import com.example.projectq.domain.repository.PreferencesRepository
 import com.example.projectq.domain.repository.UserRepository
+import com.example.projectq.domain.usecase.DeleteFavoriteUserByUsernameUseCase
+import com.example.projectq.domain.usecase.GetFavoriteUserUseCase
+import com.example.projectq.domain.usecase.GetListFavoriteUserUseCase
 import com.example.projectq.domain.usecase.GetListUserFollowersUseCase
 import com.example.projectq.domain.usecase.GetListUserFollowingUseCase
 import com.example.projectq.domain.usecase.GetListUserUseCase
+import com.example.projectq.domain.usecase.GetThemePreferenceUseCase
 import com.example.projectq.domain.usecase.GetUserDetailUseCase
+import com.example.projectq.domain.usecase.InsertFavoriteUserUseCase
 import com.example.projectq.domain.usecase.SaveAccessTokenUseCase
+import com.example.projectq.domain.usecase.SetThemePreferenceUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,14 +51,23 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(remoteDataSource: UserRemoteDataSource): UserRepository {
-        return UserRepositoryImpl(remoteDataSource)
+    fun provideUserRepository(
+        remoteDataSource: UserRemoteDataSource,
+        localDataSource: UserLocalDataSource
+    ): UserRepository {
+        return UserRepositoryImpl(remoteDataSource, localDataSource)
     }
 
     @Provides
     @Singleton
     fun provideUserRemoteDataSource(userApi: UserApi): UserRemoteDataSource {
         return UserRemoteDataSourceImpl(userApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserLocalDataSource(userDao: UserDao): UserLocalDataSource {
+        return UserLocalDataSourceImpl(userDao)
     }
 
     @Provides
@@ -95,6 +113,60 @@ object AppModule {
         dispatcherProvider: DispatcherProvider
     ): SaveAccessTokenUseCase {
         return SaveAccessTokenUseCase(preferencesRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideInsertFavoriteUserUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): InsertFavoriteUserUseCase {
+        return InsertFavoriteUserUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteFavoriteUserUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): DeleteFavoriteUserByUsernameUseCase {
+        return DeleteFavoriteUserByUsernameUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetListFavoriteUserUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): GetListFavoriteUserUseCase {
+        return GetListFavoriteUserUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetFavoriteUserUseCase(
+        userRepository: UserRepository,
+        dispatcherProvider: DispatcherProvider
+    ): GetFavoriteUserUseCase {
+        return GetFavoriteUserUseCase(userRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSetThemePreferenceUseCase(
+        preferencesRepository: PreferencesRepository,
+        dispatcherProvider: DispatcherProvider
+    ): SetThemePreferenceUseCase {
+        return SetThemePreferenceUseCase(preferencesRepository, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetThemePreferenceUseCase(
+        preferencesRepository: PreferencesRepository,
+        dispatcherProvider: DispatcherProvider
+    ): GetThemePreferenceUseCase {
+        return GetThemePreferenceUseCase(preferencesRepository, dispatcherProvider)
     }
 
     @Provides

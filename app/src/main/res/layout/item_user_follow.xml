@@ -22,7 +22,6 @@
         android:layout_marginHorizontal="@dimen/margin_start_card"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/black"
         android:textSize="@dimen/txt_name_card"
         app:layout_constraintBottom_toBottomOf="@id/img_user"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,10 +32,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@id/img_user"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:background="?attr/dividerColor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

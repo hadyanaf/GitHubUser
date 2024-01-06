@@ -7,13 +7,19 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectq.R
 import com.example.projectq.data.util.IntentConstant
 import com.example.projectq.databinding.ActivityMainBinding
 import com.example.projectq.domain.model.UserHomeDomainModel
 import com.example.projectq.ui.detail.DetailActivity
+import com.example.projectq.ui.favorite.FavoriteActivity
+import com.example.projectq.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,8 +44,16 @@ class MainActivity : AppCompatActivity() {
         vm.processEvent(MainViewModel.ViewEvent.OnActivityStarted(accessToken, defaultUsername))
     }
 
+    override fun onResume() {
+        super.onResume()
+        val defaultUsername = getString(R.string.default_username)
+        val accessToken = getString(R.string.access_token)
+        vm.processEvent(MainViewModel.ViewEvent.OnActivityStarted(accessToken, defaultUsername))
+    }
+
     private fun setupSearchView() {
         with(binding) {
+            searchBar.inflateMenu(R.menu.option_menu)
             searchView.setupWithSearchBar(searchBar)
             searchView
                 .editText
@@ -52,6 +66,25 @@ class MainActivity : AppCompatActivity() {
                         false
                     }
                 }
+
+            searchBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.favorite -> {
+                        vm.processEvent(MainViewModel.ViewEvent.OnFavoriteMenuClicked)
+                        true
+                    }
+
+                    R.id.settings -> {
+                        vm.processEvent(MainViewModel.ViewEvent.OnSettingsMenuClicked)
+                        true
+                    }
+
+
+                    else -> {
+                        false
+                    }
+                }
+            }
         }
     }
 
@@ -75,9 +108,18 @@ class MainActivity : AppCompatActivity() {
                     is MainViewModel.ViewEffect.ShowErrorMessage -> showErrorMessage(effect.message)
                     is MainViewModel.ViewEffect.ShowProgressBar -> setProgressViewVisibility(effect.isVisible)
                     is MainViewModel.ViewEffect.NavigateToDetailPage -> navigateToDetailPage(effect.username)
+                    MainViewModel.ViewEffect.NavigateToFavoritePage -> navigateToFavoritePage()
+                    MainViewModel.ViewEffect.NavigateToSettingsPage -> navigateToSettingsPage()
                 }
             }
         }
+
+        vm.uiState.onEach { state ->
+            when (state.theme) {
+                1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }.launchIn(lifecycleScope)
     }
 
     private fun showData(data: List<UserHomeDomainModel>) {
@@ -105,7 +147,13 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    companion object {
-        const val RV_VIEW_STATE = "rv_view_state"
+    private fun navigateToFavoritePage() {
+        val intent = Intent(this, FavoriteActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToSettingsPage() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
     }
 }

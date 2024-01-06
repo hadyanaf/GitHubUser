@@ -79,6 +79,7 @@ data class DetailUserResponse(
     )
 
     fun toUserDetailDomainModel() = UserDetailDomainModel(
+        id = id ?: 0,
         avatarUrl = avatarUrl.orEmpty(),
         username = login.orEmpty(),
         fullName = name.orEmpty(),
