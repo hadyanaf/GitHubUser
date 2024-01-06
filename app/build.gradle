@@ -41,6 +41,11 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
 }
 
 dependencies {
@@ -115,8 +120,19 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     // Mockito
-    testImplementation("org.mockito:mockito-core:4.4.0")
-    testImplementation("org.mockito:mockito-inline:4.4.0")
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.6.28'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:5.2.1'
+
+    // JUnit 5
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation 'de.mannodermaus.junit5:android-test-core:1.2.2'
+    testRuntimeOnly 'de.mannodermaus.junit5:android-test-runner:1.2.2'
+
+    // Kotlin Coroutines Test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1"
+
 }
 
 kapt {
